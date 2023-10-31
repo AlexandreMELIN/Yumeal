@@ -18,11 +18,12 @@ type Recipe struct {
 func (r Recipe) GetNutritionalComposition() NutritionalComposition {
 	result := NewNutritionalComposition(0, 0, 0)
 	for ingredient, quantity := range r.ingredients {
-		ingredientNutritionalComposition := ingredient.nutritionalComposition
-		ratioToApply := quantity / REFEREENCE_QUANTITY_IN_GRAM
-		result.CarbohydratesQuantity.Quantity += ratioToApply * ingredientNutritionalComposition.CarbohydratesQuantity.Quantity
-		result.FatQuantity.Quantity += ratioToApply * ingredientNutritionalComposition.FatQuantity.Quantity
-		result.ProteinsQuantity.Quantity += ratioToApply * ingredientNutritionalComposition.ProteinsQuantity.Quantity
+		ingredientNutritionalComposition := ingredient.nutritionalPanel
+		ratioToApply := quantity / float64(ingredient.nutritionalPanel.referenceQuantityInGram)
+		result.Carbohydrates.Quantity += ratioToApply * ingredientNutritionalComposition.composition.Carbohydrates.Quantity
+		result.Fat.Quantity += ratioToApply * ingredientNutritionalComposition.composition.Fat.Quantity
+		result.Proteins.Quantity += ratioToApply * ingredientNutritionalComposition.composition.Proteins.Quantity
 	}
+	result.computeCalories()
 	return *result
 }
