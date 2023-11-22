@@ -20,6 +20,17 @@ func NewNutritionalComposition(proteinsQuantity float64, fatQuantity float64, ca
 	nutritionalComposition.computeCalories()
 	return &nutritionalComposition
 }
+
 func (n *NutritionalComposition) computeCalories() {
 	n.Calories = n.Fat.ComputeCalories() + n.Proteins.ComputeCalories() + n.Carbohydrates.ComputeCalories()
+}
+
+func SumNutritionalCompositions(nutritionalCompositions ...NutritionalComposition) NutritionalComposition {
+	proteins, fat, carbohydrates := 0.0, 0.0, 0.0
+	for _, nutritionalComposition := range nutritionalCompositions {
+		proteins += nutritionalComposition.Proteins.Quantity
+		fat += nutritionalComposition.Fat.Quantity
+		carbohydrates += nutritionalComposition.Carbohydrates.Quantity
+	}
+	return *NewNutritionalComposition(proteins, fat, carbohydrates)
 }
