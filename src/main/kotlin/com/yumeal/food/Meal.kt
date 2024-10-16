@@ -10,4 +10,12 @@ data class Meal(val ingredients: Map<Food, PositiveQuantity>){
             }
         """.trimIndent()
     }
+
+    fun getNutritionalPanel(): NutritionalPanel {
+        var result = NutritionalPanel()
+        for (food in ingredients.keys){
+
+        }
+        return result
+    }
 }

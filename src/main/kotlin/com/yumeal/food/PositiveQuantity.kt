@@ -13,6 +13,8 @@ class PositiveQuantity(val quantity: Double) {
         return PositiveQuantity(quantity * p.quantity)
     }
 
+    operator fun plus(p: PositiveQuantity): PositiveQuantity = PositiveQuantity(quantity + p.quantity)
+
     override fun toString(): String {
         return quantity.toString()
     }
