@@ -43,21 +43,31 @@ class MealPlanner {
         // We first include plants if needed. We substract the amount of carbs, calories, and proteins they bring
         if (shouldIncludePlants){
             var plant = preference.plants.random()
-            var plantQuantity = PositiveQuantity(floor((remainingCarbs / 2) / plant.nutritionalPanel.carbs.quantity * 100))
+            var plantQuantity = calculateRatioInGram(PositiveQuantity(remainingCarbs / 2), plant.nutritionalPanel.carbs)
             remainingCarbs -= calculateQuantityFor100gram(plant.nutritionalPanel.carbs, plantQuantity).quantity
             remainingProteins -= calculateQuantityFor100gram(plant.nutritionalPanel.protein, plantQuantity).quantity
             remainingCalories -= calculateQuantityFor100gram(plant.nutritionalPanel.carbs, plantQuantity).quantity
             result[plant] = plantQuantity
         }
         // Calculating either on the full carbs or carbs left after adding plant
-        result[carbs] = PositiveQuantity(floor(remainingCarbs / carbs.nutritionalPanel.carbs.quantity * 100))
+        result[carbs] = calculateRatioInGram(PositiveQuantity(remainingCarbs), carbs.nutritionalPanel.carbs)
         remainingCalories -= calculateQuantityFor100gram(PositiveQuantity(carbs.nutritionalPanel.calories), PositiveQuantity(result[carbs]?.quantity ?: 0.0)).quantity
 
-        // Computing protein and substracting calories
+        // Computing protein and substracting calories, starting with dairy
+        if (preference.dairy.isNotEmpty()){
+            var dairy = preference.dairy.random()
+            // TODO: those ratios need to be in the preference as for example it's ok for the breakfast to have more calories coming from dairy (like white cheese)
+            val targetProteinsForDairy = remainingProteins * 0.2
+            result[dairy] = calculateRatioInGram(PositiveQuantity(targetProteinsForDairy), dairy.nutritionalPanel.protein)
+            remainingProteins -= targetProteinsForDairy
+            remainingCalories -= calculateQuantityFor100gram(PositiveQuantity(dairy.nutritionalPanel.calories), PositiveQuantity(result[dairy]?.quantity ?: 0.0)).quantity
+        }
         var protein = preference.proteins.random()
-        result[protein] = PositiveQuantity(floor(remainingProteins / protein.nutritionalPanel.protein.quantity) * 100)
+        result[protein] = calculateRatioInGram(PositiveQuantity(remainingProteins), protein.nutritionalPanel.protein)
         remainingCalories -= calculateQuantityFor100gram(PositiveQuantity(protein.nutritionalPanel.calories), PositiveQuantity(result[protein]?.quantity ?: 0.0)).quantity
-
+        //Ugly but ok for now
+        if (remainingCalories < 0)
+            return Meal(result)
         // Adding veggies and fruits on the leftover calories. If none are set, will be in a calorie deficit but a diet without fruit and  vegetable is not healthy anyway
         var hasVegetables = preference.vegetables.isNotEmpty()
         var hasFruits = preference.fruits.isNotEmpty()
@@ -65,16 +75,16 @@ class MealPlanner {
             hasVegetables && hasFruits -> {
                 val fruit = preference.fruits.random()
                 val vegetable = preference.vegetables.random()
-                result[vegetable] = PositiveQuantity(floor((remainingCalories * 0.8) / vegetable.nutritionalPanel.calories * 100))
-                result[fruit] = PositiveQuantity(floor((remainingCalories * 0.2) / fruit.nutritionalPanel.calories * 100))
+                result[vegetable] = calculateRatioInGram(PositiveQuantity(remainingCalories * 0.8), PositiveQuantity(vegetable.nutritionalPanel.calories))
+                result[fruit] = calculateRatioInGram(PositiveQuantity(remainingCalories * 0.8), PositiveQuantity(fruit.nutritionalPanel.calories))
             }
             hasVegetables -> {
                 val vegetable = preference.vegetables.random()
-                result[vegetable] = PositiveQuantity(floor((remainingCalories * 0.8) / vegetable.nutritionalPanel.calories * 100))
+                result[vegetable] = calculateRatioInGram(PositiveQuantity(remainingCalories * 0.8), PositiveQuantity(vegetable.nutritionalPanel.calories))
             }
             hasFruits -> {
                 val fruit = preference.fruits.random()
-                result[fruit] = PositiveQuantity(floor((remainingCalories) / fruit.nutritionalPanel.calories * 100))
+                result[fruit] = calculateRatioInGram(PositiveQuantity(remainingCalories * 0.8), PositiveQuantity(fruit.nutritionalPanel.calories))
 
             }
 
@@ -89,4 +99,7 @@ class MealPlanner {
     fun calculateQuantityFor100gram(quantity: PositiveQuantity, referentialQuantity: PositiveQuantity): PositiveQuantity{
         return PositiveQuantity((quantity.quantity / 100) * referentialQuantity.quantity)
     }
+    fun calculateRatioInGram(numerator: PositiveQuantity, denominator: PositiveQuantity): PositiveQuantity = PositiveQuantity(
+        floor(numerator.quantity / denominator.quantity * 100)
+    )
 }
