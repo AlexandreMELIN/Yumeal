@@ -46,7 +46,7 @@ class MealPlanner {
             var plantQuantity = calculateRatioInGram(PositiveQuantity(remainingCarbs / 2), plant.nutritionalPanel.carbs)
             remainingCarbs -= calculateQuantityFor100gram(plant.nutritionalPanel.carbs, plantQuantity).quantity
             remainingProteins -= calculateQuantityFor100gram(plant.nutritionalPanel.protein, plantQuantity).quantity
-            remainingCalories -= calculateQuantityFor100gram(plant.nutritionalPanel.carbs, plantQuantity).quantity
+            remainingCalories -= calculateQuantityFor100gram(PositiveQuantity(plant.nutritionalPanel.calories), plantQuantity).quantity
             result[plant] = plantQuantity
         }
         // Calculating either on the full carbs or carbs left after adding plant
@@ -96,8 +96,8 @@ class MealPlanner {
 
         return Meal(result)
     }
-    fun calculateQuantityFor100gram(quantity: PositiveQuantity, referentialQuantity: PositiveQuantity): PositiveQuantity{
-        return PositiveQuantity((quantity.quantity / 100) * referentialQuantity.quantity)
+    fun calculateQuantityFor100gram(referentialQuantity: PositiveQuantity, quantity: PositiveQuantity): PositiveQuantity{
+        return PositiveQuantity((referentialQuantity.quantity / 100) * quantity.quantity)
     }
     fun calculateRatioInGram(numerator: PositiveQuantity, denominator: PositiveQuantity): PositiveQuantity = PositiveQuantity(
         floor(numerator.quantity / denominator.quantity * 100)
