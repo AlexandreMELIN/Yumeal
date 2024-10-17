@@ -3,6 +3,7 @@ package com.yumeal
 import com.yumeal.algorithm.MealPlanner
 import com.yumeal.algorithm.UserProfile
 import com.yumeal.food.*
+import com.yumeal.grocery.GroceryList
 
 //@SpringBootApplication
 class YumealApplication
@@ -233,5 +234,7 @@ fun main(args: Array<String>) {
     )
     val mealForADay = mealPlanner.plan(userProfile, breakfastPreference, mealPreference)
     println(mealForADay.toString())
+    val groceryList = GroceryList(mealForADay)
+    println(groceryList)
 }
 
