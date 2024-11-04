@@ -1,9 +1,9 @@
-package com.yumeal.grocery
+package com.yumeal.domain.grocery
 
-import com.yumeal.algorithm.MealsForADay
-import com.yumeal.food.Food
-import com.yumeal.food.Meal
-import com.yumeal.food.PositiveQuantity
+import com.yumeal.domain.algorithm.MealsForADay
+import com.yumeal.domain.food.Food
+import com.yumeal.domain.food.Meal
+import com.yumeal.domain.food.PositiveQuantity
 
 class GroceryList(mealsPlanned: List<Meal>) {
     constructor(mealsPlanned: MealsForADay) : this(listOf(mealsPlanned.breakfast, mealsPlanned.lunch, mealsPlanned.dinner))

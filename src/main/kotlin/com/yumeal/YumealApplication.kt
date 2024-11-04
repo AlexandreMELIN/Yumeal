@@ -1,9 +1,9 @@
 package com.yumeal
 
-import com.yumeal.algorithm.MealPlanner
-import com.yumeal.algorithm.UserProfile
-import com.yumeal.food.*
-import com.yumeal.grocery.GroceryList
+import com.yumeal.domain.algorithm.MealPlanner
+import com.yumeal.domain.algorithm.UserProfile
+import com.yumeal.domain.food.*
+import com.yumeal.domain.grocery.GroceryList
 
 //@SpringBootApplication
 class YumealApplication

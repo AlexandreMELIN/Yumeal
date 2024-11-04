@@ -1,7 +1,7 @@
-package com.yumeal.algorithm
+package com.yumeal.domain.algorithm
 
-import com.yumeal.food.Meal
-import com.yumeal.food.NutritionalPanel
+import com.yumeal.domain.food.Meal
+import com.yumeal.domain.food.NutritionalPanel
 
 data class MealsForADay(val breakfast: Meal, val lunch: Meal, val dinner: Meal){
     override fun toString(): String {
@@ -13,7 +13,7 @@ data class MealsForADay(val breakfast: Meal, val lunch: Meal, val dinner: Meal){
         """.trimIndent()
     }
 
-    fun getNutritionalPanel(): NutritionalPanel{
+    fun getNutritionalPanel(): NutritionalPanel {
         return breakfast.getNutritionalPanel() + lunch.getNutritionalPanel() + dinner.getNutritionalPanel()
     }
 }

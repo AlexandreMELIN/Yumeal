@@ -1,4 +1,4 @@
-package com.yumeal.food
+package com.yumeal.domain.food
 
 class PositiveQuantity(val quantity: Double) {
 
@@ -9,7 +9,7 @@ class PositiveQuantity(val quantity: Double) {
         return PositiveQuantity(quantity * d)
     }
 
-    operator fun times(p: PositiveQuantity): PositiveQuantity{
+    operator fun times(p: PositiveQuantity): PositiveQuantity {
         return PositiveQuantity(quantity * p.quantity)
     }
 

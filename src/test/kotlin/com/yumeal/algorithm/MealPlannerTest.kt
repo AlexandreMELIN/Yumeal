@@ -1,7 +1,8 @@
 package com.yumeal.algorithm
 
-import com.yumeal.food.Meal
-import com.yumeal.food.PositiveQuantity
+import com.yumeal.domain.algorithm.MealPlanner
+import com.yumeal.domain.food.Meal
+import com.yumeal.domain.food.PositiveQuantity
 import org.junit.jupiter.api.Test
 
 import org.junit.jupiter.api.Assertions.*

@@ -1,4 +1,4 @@
-package com.yumeal.food
+package com.yumeal.domain.food
 
 data class Meal(val ingredients: Map<Food, PositiveQuantity>){
     override fun toString(): String {

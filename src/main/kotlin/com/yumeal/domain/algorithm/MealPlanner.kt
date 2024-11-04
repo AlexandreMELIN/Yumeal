@@ -1,14 +1,14 @@
-package com.yumeal.algorithm
+package com.yumeal.domain.algorithm
 
-import com.yumeal.food.Food
-import com.yumeal.food.FoodPreference
-import com.yumeal.food.Meal
-import com.yumeal.food.PositiveQuantity
+import com.yumeal.domain.food.Food
+import com.yumeal.domain.food.FoodPreference
+import com.yumeal.domain.food.Meal
+import com.yumeal.domain.food.PositiveQuantity
 import kotlin.math.floor
 import kotlin.random.Random
 
 class MealPlanner {
-    fun plan(userProfile: UserProfile, breakfastPreference: FoodPreference, mealPreference: FoodPreference): MealsForADay{
+    fun plan(userProfile: UserProfile, breakfastPreference: FoodPreference, mealPreference: FoodPreference): MealsForADay {
         val targetFiber = (14 * (userProfile.targetCalories.quantity / 1000)).toInt()
         var breakfast = planAMeal(
             targetCalories = userProfile.targetCalories * 0.2,
@@ -32,7 +32,7 @@ class MealPlanner {
         return MealsForADay(breakfast, lunch, dinner)
     }
 
-    private fun planAMeal(targetCalories: PositiveQuantity, targetProteins: PositiveQuantity, targetCarbs: PositiveQuantity, preference: FoodPreference): Meal{
+    private fun planAMeal(targetCalories: PositiveQuantity, targetProteins: PositiveQuantity, targetCarbs: PositiveQuantity, preference: FoodPreference): Meal {
         var result = mutableMapOf<Food, PositiveQuantity>()
         var remainingProteins = targetProteins.quantity
         var remainingCarbs = targetCarbs.quantity
@@ -96,7 +96,7 @@ class MealPlanner {
 
         return Meal(result)
     }
-    fun calculateQuantityFor100gram(referentialQuantity: PositiveQuantity, quantity: PositiveQuantity): PositiveQuantity{
+    fun calculateQuantityFor100gram(referentialQuantity: PositiveQuantity, quantity: PositiveQuantity): PositiveQuantity {
         return PositiveQuantity((referentialQuantity.quantity / 100) * quantity.quantity)
     }
     fun calculateRatioInGram(numerator: PositiveQuantity, denominator: PositiveQuantity): PositiveQuantity = PositiveQuantity(

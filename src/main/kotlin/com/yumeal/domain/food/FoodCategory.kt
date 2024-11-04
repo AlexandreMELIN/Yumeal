@@ -1,4 +1,4 @@
-package com.yumeal.food
+package com.yumeal.domain.food
 
 enum class FoodCategory {
     Plant,
