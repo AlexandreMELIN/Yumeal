@@ -8,6 +8,7 @@ import kotlin.math.floor
 import kotlin.random.Random
 
 class MealPlanner {
+    val VEGETABLE_PORTION_IN_GRAM = 80
     fun plan(userProfile: UserProfile, breakfastPreference: FoodPreference, mealPreference: FoodPreference): MealsForADay {
         val targetFiber = (14 * (userProfile.targetCalories.quantity / 1000)).toInt()
         var breakfast = planAMeal(
@@ -75,16 +76,16 @@ class MealPlanner {
             hasVegetables && hasFruits -> {
                 val fruit = preference.fruits.random()
                 val vegetable = preference.vegetables.random()
-                result[vegetable] = calculateRatioInGram(PositiveQuantity(remainingCalories * 0.8), PositiveQuantity(vegetable.nutritionalPanel.calories))
-                result[fruit] = calculateRatioInGram(PositiveQuantity(remainingCalories * 0.8), PositiveQuantity(fruit.nutritionalPanel.calories))
+                result[vegetable] = PositiveQuantity(VEGETABLE_PORTION_IN_GRAM)
+                result[fruit] = PositiveQuantity(VEGETABLE_PORTION_IN_GRAM)
             }
             hasVegetables -> {
                 val vegetable = preference.vegetables.random()
-                result[vegetable] = calculateRatioInGram(PositiveQuantity(remainingCalories * 0.8), PositiveQuantity(vegetable.nutritionalPanel.calories))
+                result[vegetable] = PositiveQuantity(2 * VEGETABLE_PORTION_IN_GRAM)
             }
             hasFruits -> {
                 val fruit = preference.fruits.random()
-                result[fruit] = calculateRatioInGram(PositiveQuantity(remainingCalories * 0.8), PositiveQuantity(fruit.nutritionalPanel.calories))
+                result[fruit] = PositiveQuantity(2 * VEGETABLE_PORTION_IN_GRAM)
 
             }
 
