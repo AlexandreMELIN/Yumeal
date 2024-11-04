@@ -16,7 +16,5 @@ data class FoodPreference(
             require(fruits.all { it.category == FoodCategory.Fruit }){"Not all fruit are tagged with category fruit"}
             require(vegetables.all { it.category == FoodCategory.Vegetable }){"Not all vegetables are tagged with category vegetables"}
             require(plants.all { it.category == FoodCategory.Plant }){"Not all plant are tagged with category plant"}
-            require(proteins.isNotEmpty())
-            require(carbs.isNotEmpty())
     }
 }

@@ -8,8 +8,8 @@ import kotlin.math.floor
 import kotlin.random.Random
 
 class MealPlanner {
-    val VEGETABLE_PORTION_IN_GRAM = 80
-    fun plan(userProfile: UserProfile, breakfastPreference: FoodPreference, mealPreference: FoodPreference): MealsForADay {
+    private val VEGETABLE_PORTION_IN_GRAM = 80
+    fun plan(userProfile: UserProfile, breakfastPreference: FoodPreference, mealPreference: FoodPreference): Classic3MealsForADay {
         val targetFiber = (14 * (userProfile.targetCalories.quantity / 1000)).toInt()
         var breakfast = planAMeal(
             targetCalories = userProfile.targetCalories * 0.2,
@@ -30,11 +30,22 @@ class MealPlanner {
             preference = mealPreference,
         )
 
-        return MealsForADay(breakfast, lunch, dinner)
+        return Classic3MealsForADay(breakfast, lunch, dinner)
+    }
+
+    fun plan(userProfile: UserProfile, mealOrganization: MealOrganization): MealsForADay{
+        var meals: MealsForADay = MealsForADay(mealOrganization.mealPreference.map {
+            planAMeal(
+                targetCalories = userProfile.targetCalories * it.ratio.value,
+                targetProteins = userProfile.targetProtein * it.ratio.value,
+                targetCarbs = userProfile.targetCarbs * it.ratio.value,
+                preference = it.foodPreference)
+        })
+        return meals
     }
 
     private fun planAMeal(targetCalories: PositiveQuantity, targetProteins: PositiveQuantity, targetCarbs: PositiveQuantity, preference: FoodPreference): Meal {
-        var result = mutableMapOf<Food, PositiveQuantity>()
+        val result = mutableMapOf<Food, PositiveQuantity>()
         var remainingProteins = targetProteins.quantity
         var remainingCarbs = targetCarbs.quantity
         var remainingCalories = targetCalories.quantity * 0.9 // Leaving 10 % of calories for seasoning / fat during the cooking process

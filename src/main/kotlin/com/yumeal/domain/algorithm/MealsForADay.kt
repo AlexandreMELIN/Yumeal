@@ -1,19 +1,13 @@
 package com.yumeal.domain.algorithm
 
 import com.yumeal.domain.food.Meal
-import com.yumeal.domain.food.NutritionalPanel
 
-data class MealsForADay(val breakfast: Meal, val lunch: Meal, val dinner: Meal){
+data class MealsForADay(val meals: List<Meal>) {
     override fun toString(): String {
         return """
-            Breakfast: ${breakfast.toString()}
-            Lunch: ${lunch.toString()}
-            Dinner: ${dinner.toString()}
-            Nutritional panel for the day : ${getNutritionalPanel()}
+            ${
+            meals.joinToString("\n") { it.toString() }
+        }
         """.trimIndent()
-    }
-
-    fun getNutritionalPanel(): NutritionalPanel {
-        return breakfast.getNutritionalPanel() + lunch.getNutritionalPanel() + dinner.getNutritionalPanel()
     }
 }

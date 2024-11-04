@@ -1,13 +1,12 @@
 package com.yumeal.domain.grocery
 
-import com.yumeal.domain.algorithm.MealsForADay
+import com.yumeal.domain.algorithm.Classic3MealsForADay
 import com.yumeal.domain.food.Food
 import com.yumeal.domain.food.Meal
 import com.yumeal.domain.food.PositiveQuantity
 
 class GroceryList(mealsPlanned: List<Meal>) {
-    constructor(mealsPlanned: MealsForADay) : this(listOf(mealsPlanned.breakfast, mealsPlanned.lunch, mealsPlanned.dinner))
-
+    constructor(mealsPlanned: Classic3MealsForADay) : this(listOf(mealsPlanned.breakfast, mealsPlanned.lunch, mealsPlanned.dinner))
     private val groceries: MutableMap<Food, PositiveQuantity>  = mutableMapOf()
 
     init {

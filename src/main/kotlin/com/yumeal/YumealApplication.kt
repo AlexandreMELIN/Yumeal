@@ -1,7 +1,6 @@
 package com.yumeal
 
-import com.yumeal.domain.algorithm.MealPlanner
-import com.yumeal.domain.algorithm.UserProfile
+import com.yumeal.domain.algorithm.*
 import com.yumeal.domain.food.*
 import com.yumeal.domain.grocery.GroceryList
 
@@ -236,5 +235,33 @@ fun main(args: Array<String>) {
     println(mealForADay.toString())
     val groceryList = GroceryList(mealForADay)
     println(groceryList)
+    println("----------------------------------------------------------------------------")
+    val pastaPreference = FoodPreference(
+        proteins = listOf(egg, salmon, shrimps, chicken),
+        carbs = listOf(rice, pasta),
+        dairy = listOf(comteCheese, mozarella),
+        fruits = listOf(),
+        vegetables = listOf(zucchini, eggplant, pepper),
+        plants = listOf(lentil, chickpea)
+    )
+
+    val goMuscuPreference = FoodPreference(
+        proteins = listOf(egg, chicken),
+        carbs = listOf(rice),
+        dairy = listOf(),
+        fruits = listOf(),
+        vegetables = listOf(zucchini, eggplant, pepper),
+        plants = listOf(lentil, chickpea)
+    )
+
+    var mealOrganization = MealOrganization(listOf(
+        MealPreference(Ratio(0.2), breakfastPreference),
+        MealPreference(Ratio(0.5), pastaPreference),
+        MealPreference(Ratio(0.3), goMuscuPreference))
+    )
+    val result = mealPlanner.plan(userProfile, mealOrganization)
+    println(result.toString())
+
+
 }
 
