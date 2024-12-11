@@ -1,6 +1,6 @@
 package com.yumeal.domain.grocery
 
-import com.yumeal.domain.algorithm.Classic3MealsForADay
+import com.yumeal.domain.meals.Classic3MealsForADay
 import com.yumeal.domain.food.Food
 import com.yumeal.domain.food.Meal
 import com.yumeal.domain.food.PositiveQuantity

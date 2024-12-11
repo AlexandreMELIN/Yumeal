@@ -1,6 +1,8 @@
 package com.yumeal.domain.algorithm
 
 import com.yumeal.domain.food.*
+import com.yumeal.domain.meals.MealOrganization
+import com.yumeal.domain.meals.MealPreference
 import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.api.Test
 import kotlin.test.assertFailsWith
@@ -55,12 +57,14 @@ class MealOrganizationTest{
         assertFailsWith<IllegalArgumentException> {
             MealOrganization(listOf(
                 MealPreference(Ratio(0.7), foodPreference),
-                MealPreference(Ratio(0.7), foodPreference)))
+                MealPreference(Ratio(0.7), foodPreference)
+            ))
         }
         assertFailsWith<IllegalArgumentException> {
             MealOrganization(listOf(
                 MealPreference(Ratio(0.4), foodPreference),
-                MealPreference(Ratio(0.7), foodPreference)))
+                MealPreference(Ratio(0.7), foodPreference)
+            ))
         }
         val mealOrganization = MealOrganization(listOf(
             MealPreference(Ratio(0.7), foodPreference),

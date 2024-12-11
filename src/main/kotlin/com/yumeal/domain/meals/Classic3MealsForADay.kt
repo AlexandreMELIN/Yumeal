@@ -1,4 +1,4 @@
-package com.yumeal.domain.algorithm
+package com.yumeal.domain.meals
 
 import com.yumeal.domain.food.Meal
 import com.yumeal.domain.food.NutritionalPanel
@@ -15,5 +15,8 @@ data class Classic3MealsForADay(val breakfast: Meal, val lunch: Meal, val dinner
 
     fun getNutritionalPanel(): NutritionalPanel {
         return breakfast.getNutritionalPanel() + lunch.getNutritionalPanel() + dinner.getNutritionalPanel()
+    }
+    fun toMealsForADay(): MealsForADay {
+        return MealsForADay(listOf(breakfast, lunch, dinner))
     }
 }

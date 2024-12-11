@@ -1,4 +1,4 @@
-package com.yumeal.domain.algorithm
+package com.yumeal.domain.meals
 
 import com.yumeal.domain.food.Meal
 

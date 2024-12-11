@@ -4,6 +4,10 @@ import com.yumeal.domain.food.Food
 import com.yumeal.domain.food.FoodPreference
 import com.yumeal.domain.food.Meal
 import com.yumeal.domain.food.PositiveQuantity
+import com.yumeal.domain.meals.Classic3MealsForADay
+import com.yumeal.domain.meals.MealOrganization
+import com.yumeal.domain.meals.MealsForADay
+import com.yumeal.domain.meals.MealsWeek
 import kotlin.math.floor
 import kotlin.random.Random
 
@@ -33,7 +37,7 @@ class MealPlanner {
         return Classic3MealsForADay(breakfast, lunch, dinner)
     }
 
-    fun plan(userProfile: UserProfile, mealOrganization: MealOrganization): MealsForADay{
+    fun plan(userProfile: UserProfile, mealOrganization: MealOrganization): MealsForADay {
         var meals: MealsForADay = MealsForADay(mealOrganization.mealPreference.map {
             planAMeal(
                 targetCalories = userProfile.targetCalories * it.ratio.value,
@@ -42,6 +46,17 @@ class MealPlanner {
                 preference = it.foodPreference)
         })
         return meals
+    }
+
+    fun planForAWeek(userProfile: UserProfile, breakfastPreference: FoodPreference, mealPreference: FoodPreference): MealsWeek {
+        var day1 = plan(userProfile, breakfastPreference, mealPreference)
+        var day2 = plan(userProfile, breakfastPreference, mealPreference)
+        var day3 = plan(userProfile, breakfastPreference, mealPreference)
+        var day4 = plan(userProfile, breakfastPreference, mealPreference)
+        var day5 = plan(userProfile, breakfastPreference, mealPreference)
+        var day6 = plan(userProfile, breakfastPreference, mealPreference)
+        var day7 = plan(userProfile, breakfastPreference, mealPreference)
+        return MealsWeek(day1, day2, day3, day4, day5, day6, day7)
     }
 
     private fun planAMeal(targetCalories: PositiveQuantity, targetProteins: PositiveQuantity, targetCarbs: PositiveQuantity, preference: FoodPreference): Meal {

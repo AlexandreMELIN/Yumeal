@@ -32,7 +32,15 @@ data class NutritionalPanel (val protein: PositiveQuantity, val carbs: PositiveQ
     }
 
     override fun toString(): String {
-        return "NutritionalPanel(protein=$protein, carbs=$carbs, sugar=$sugar, fat=$fat, saturatedFat=$saturatedFat, fiber=$fiber, calories=$calories)"
+        return """
+            protein=$protein,
+            carbs=$carbs,
+                sugar=$sugar,
+            fat=$fat,
+                saturatedFat=$saturatedFat,
+            fiber=$fiber,
+            calories=$calories)
+        """.trimIndent()
     }
 
 
