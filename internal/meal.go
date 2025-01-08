@@ -1,6 +1,10 @@
 package internal
 
-import "math"
+import (
+	"math"
+	"strings"
+)
+import "fmt"
 
 type Meal struct {
 	items []MealItem
@@ -29,4 +33,29 @@ func (meal *Meal) GetCarbs() int {
 		carbs += int(math.Round(float64(i.quantity) / float64(100) * float64(i.food.NutritionalPanel.Carbs)))
 	}
 	return carbs
+}
+
+func (m *Meal) PrintInConsole() {
+	fmt.Println("Meal")
+
+	// Convert meal items to strings
+	var foodStrings []string
+	for _, item := range m.items {
+		foodString := fmt.Sprintf("%dg of %s", item.quantity, strings.ToLower(item.food.Name))
+		foodStrings = append(foodStrings, foodString)
+	}
+
+	// Join all portions with appropriate separators
+	switch len(foodStrings) {
+	case 0:
+		fmt.Println("Empty meal")
+	case 1:
+		fmt.Println(foodStrings[0])
+	case 2:
+		fmt.Printf("%s and %s\n", foodStrings[0], foodStrings[1])
+	default:
+		lastItem := foodStrings[len(foodStrings)-1]
+		otherItems := foodStrings[:len(foodStrings)-1]
+		fmt.Printf("%s, and %s\n", strings.Join(otherItems, ", "), lastItem)
+	}
 }

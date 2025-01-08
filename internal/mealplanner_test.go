@@ -208,6 +208,51 @@ func TestMealPlanner(t *testing.T) {
 			},
 		},
 	}
+	var oat = Food{
+		Name: "Oat",
+		NutritionalPanel: NutritionalPanel{
+			Protein: 13,
+			Carbs:   68,
+			Fat:     7,
+			Fiber:   10,
+		},
+		Category: Starch,
+	}
+
+	// Create breakfast preference
+	var breakfastPreference = MealPreference{
+		Dairy: []Food{
+			{
+				Name: "Greek Yogurt",
+				NutritionalPanel: NutritionalPanel{
+					Protein: 10,
+					Carbs:   4,
+					Fat:     0,
+					Fiber:   0,
+				},
+				Category: Dairy,
+			},
+		},
+		Protein: []Food{
+			{
+				Name: "Eggs",
+				NutritionalPanel: NutritionalPanel{
+					Protein: 13,
+					Carbs:   1,
+					Fat:     11,
+					Fiber:   0,
+				},
+				Category: Protein,
+			},
+		},
+		Starch: []Food{
+			oat,
+		},
+		// Initialize empty slices for other categories
+		Plant:      []Food{},
+		Vegetables: []Food{},
+		Fruits:     []Food{},
+	}
 	target := NutritionalPanel{Protein: 55, Carbs: 132}
 	meal := PlanAMeal(mealPreference, target)
 	expectedProtein := 55
@@ -220,4 +265,7 @@ func TestMealPlanner(t *testing.T) {
 	if gotCarbs < expectedCarbs {
 		t.Errorf("got carbs <= %d, want %d", gotCarbs, expectedCarbs)
 	}
+	meal.PrintInConsole()
+	breakfast := PlanBreakfast(breakfastPreference, target)
+	breakfast.PrintInConsole()
 }
